@@ -136,7 +136,7 @@ def _parse(text: str, reference: date) -> date:
         return date(int(match[1]), int(match[2]), int(match[3]))
     match = re.fullmatch(r"(\d{4})/(\d{1,2})/(\d{1,2})", text)
     if match:
-        return date(int(match[1]), int(match[3]), int(match[2]))
+        return date(int(match[1]), int(match[2]), int(match[3]))
     match = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", text)
     if match:
         return date(int(match[3]), int(match[1]), int(match[2]))
@@ -163,7 +163,7 @@ def _parse(text: str, reference: date) -> date:
 def parse(s: str, today: date | None = None) -> date:
     """Parse an English date, relative to ``today`` (default: the local date).
 
-    Slash dates use month/day/year or year/day/month (with a four-digit year).
+    Slash dates use month/day/year or year/month/day (with a four-digit year).
     Hyphenated ISO dates use year-month-day. Bare weekdays mean the next occurrence,
     including today; next/last weekdays are strictly future/past. Missing years
     use the reference year. Arithmetic applies combined years/months first,

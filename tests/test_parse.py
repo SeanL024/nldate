@@ -67,8 +67,9 @@ def test_slash_date():
     assert parse("12/01/2025") == date(2025, 12, 1)
 
 
-def test_year_day_month_slash_date():
-    assert parse("2025/04/12") == date(2025, 12, 4)
+def test_year_month_day_slash_date():
+    assert parse("2025/04/12") == date(2025, 4, 12)
+    assert parse("2025/12/04") == date(2025, 12, 4)
 
 
 # More complex expressions
