@@ -143,14 +143,14 @@ def _parse(text: str, reference: date) -> date:
 
     # Strip English ordinal suffixes before matching named-month formats.
     text = re.sub(r"\b(\d{1,2})(?:st|nd|rd|th)\b", r"\1", text)
-    match = re.fullmatch(r"([a-z]+) (\d{1,2})(?:,? (\d{4}))?", text)
+    match = re.fullmatch(r"([a-z]+)\.? (\d{1,2})(?:,? (\d{4}))?", text)
     if match and match[1] in _MONTHS:
         return date(
             int(match[3]) if match[3] else reference.year,
             _MONTHS[match[1]],
             int(match[2]),
         )
-    match = re.fullmatch(r"(\d{1,2}) ([a-z]+)(?:,? (\d{4}))?", text)
+    match = re.fullmatch(r"(\d{1,2}) ([a-z]+)\.?(?:,? (\d{4}))?", text)
     if match and match[2] in _MONTHS:
         return date(
             int(match[3]) if match[3] else reference.year,

@@ -55,6 +55,52 @@ def test_month_day_year():
     assert parse("December 1, 2025") == date(2025, 12, 1)
 
 
+@pytest.mark.parametrize(
+    ("month", "number"),
+    [
+        ("Jan", 1),
+        ("Feb", 2),
+        ("Mar", 3),
+        ("Apr", 4),
+        ("May", 5),
+        ("Jun", 6),
+        ("Jul", 7),
+        ("Aug", 8),
+        ("Sep", 9),
+        ("Oct", 10),
+        ("Nov", 11),
+        ("Dec", 12),
+    ],
+)
+@pytest.mark.parametrize(
+    "expression",
+    [
+        "{month}. 5, 1999",
+        "{month} 5 1999",
+        "{month} 5, 1999",
+        "{month}. 5 1999",
+        "5 {month}. 1999",
+        "5 {month} 1999",
+    ],
+)
+def test_abbreviated_month_dates(month, number, expression):
+    assert parse(expression.format(month=month)) == date(1999, number, 5)
+
+
+def test_abbreviated_month_in_arithmetic():
+    assert parse("5 days before Nov. 5, 1999") == date(1999, 10, 31)
+
+
+def test_abbreviated_month_without_year():
+    assert parse("  NOV.   5  ", today=REF) == date(2026, 11, 5)
+
+
+@pytest.mark.parametrize("expression", ["Feb. 29, 1999", "Nov.. 5, 1999"])
+def test_invalid_abbreviated_month_dates(expression):
+    with pytest.raises(ValueError):
+        parse(expression)
+
+
 def test_ordinal_date():
     assert parse("December 1st, 2025") == date(2025, 12, 1)
 
