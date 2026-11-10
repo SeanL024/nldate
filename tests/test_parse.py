@@ -67,6 +67,10 @@ def test_slash_date():
     assert parse("12/01/2025") == date(2025, 12, 1)
 
 
+def test_year_day_month_slash_date():
+    assert parse("2025/04/12") == date(2025, 12, 4)
+
+
 # More complex expressions
 
 
@@ -106,8 +110,10 @@ def test_invalid_calendar_date():
     with pytest.raises(ValueError):
         parse("February 30, 2025")
 
+
 def test_day_after_tomorrow():
     assert parse("the day after tomorrow", today=REF) == date(2026, 11, 12)
+
 
 def test_day_before_yesterday():
     assert parse("the day before yesterday", today=REF) == date(2026, 11, 8)
